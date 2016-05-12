@@ -1,0 +1,61 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="CustomerAccount"
+     targetNamespace="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"
+     xmlns:tns="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"
+     xmlns:inp1="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"
+     xmlns:inp2="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"
+             elementFormDefault="qualified">
+            <element name="CreateCustomrReq">
+              <complexType>
+                <sequence>
+                  <element name="MSISDN" type="xsd:string" />
+                </sequence>
+              </complexType>
+            </element>
+              <complexType name="CustomerAccountType">
+                <sequence>
+                  <element name="MSISDN" type="xsd:string" />
+                  <element name="nombre" type="xsd:string" />
+                  <element name="apellido" type="xsd:string" />
+                  <element name="planTarifario" type="xsd:string" />
+                </sequence>
+              </complexType>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="in" element="tns:CreateCustomrReq"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="out" type="tns:CustomerAccountType"/>
+    </wsdl:message>
+    <wsdl:portType name="customerAccount_PortType">
+        <wsdl:operation name="get">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="customerAccount_Binding" type="tns:customerAccount_PortType">
+        <soap12:binding transport="http://www.w3.org/2003/05/soap/bindings/HTTP/"/>
+        <wsdl:operation name="get">
+            <soap12:operation style="document" soapAction="get" soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/ServiceBusApplication/SBProject/e"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomerAccount_Service">
+        <wsdl:port name="CustomerAccount_Port" binding="tns:customerAccount_Binding">
+            <soap12:address location="http://www.example.com"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
